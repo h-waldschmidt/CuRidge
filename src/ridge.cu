@@ -5,7 +5,7 @@
 #include <cuda_runtime.h>
 #include <cusolverDn.h>
 
-#include <cusolver_utils.h>
+#include "utils/cusolver_utils.h"
 
 namespace ridge
 {
@@ -87,10 +87,10 @@ namespace ridge
         CUDA_CHECK(cudaFree(d_lhs_vector));
 
         // query working space of geqrf and ormqr
-        CUSOLVER_CHECK(cusolverDnDgeqrf_bufferSize(cusolverH, m, m, d_A, lda, &lwork_geqrf));
+        CUSOLVER_CHECK(cusolverDnDgeqrf_bufferSize(cusolverH, m, m, d_rhs_t_rhs_prod, lda, &lwork_geqrf));
 
         CUSOLVER_CHECK(cusolverDnDormqr_bufferSize(cusolverH, CUBLAS_SIDE_LEFT, CUBLAS_OP_T, m, nrhs, m,
-                                                   d_A, lda, d_tau, d_B, ldb, &lwork_ormqr));
+                                                   d_rhs_t_rhs_prod, lda, d_tau, d_rhs_t_lhs_prod, ldb, &lwork_ormqr));
 
         lwork = std::max(lwork_geqrf, lwork_ormqr);
 
