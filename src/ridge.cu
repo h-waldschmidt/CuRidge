@@ -24,7 +24,6 @@ namespace ridge
         // device/gpu memory pointers
         double *d_rhs_matrix = nullptr;
         double *d_rhs_t_rhs_prod = nullptr;
-        double *d_lamda_diagonal = nullptr;
         double *d_tau = nullptr;
         double *d_lhs_vector = nullptr;
         double *d_rhs_t_lhs_prod = nullptr;
@@ -39,8 +38,8 @@ namespace ridge
         double const one = 1;
         int const nrhs = 1;
         // create handlers
-        CUSOLVER_CHECK(cusolverDnCreate(&cusolverH));
         CUBLAS_CHECK(cublasCreate(&cublasH));
+        CUSOLVER_CHECK(cusolverDnCreate(&cusolverH));
 
         CUDA_CHECK(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
         CUSOLVER_CHECK(cusolverDnSetStream(cusolverH, stream));
@@ -148,5 +147,7 @@ namespace ridge
         CUDA_CHECK(cudaStreamDestroy(stream));
 
         CUDA_CHECK(cudaDeviceReset());
+
+        return x;
     }
 }
