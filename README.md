@@ -8,9 +8,9 @@ First make sure you have installed CUDA.
 
 To use the regression just copy the files in `src/` into your project and use it like shown in the examples.
 
-The folder `examples/` provides two usage examples:
+There are three possible ways to include ridge into your project:
 
-1. The first examples just includes the project-file into an cuda file/project.
+1. The first way just includes the project-file into an cuda file/project.
 
    Do the following to run it:
 
@@ -26,7 +26,7 @@ The folder `examples/` provides two usage examples:
    ./out
    ```
 
-2. The second example uses forward declaration in an c++ file. This means that we can call the cuda code in c++ projects.
+2. The second way uses forward declaration in an c++ file without CMake. This means that we can call the cuda code in c++ projects.
 
    Do the following to run it:
 
@@ -43,3 +43,7 @@ The folder `examples/` provides two usage examples:
    ```sh
    ./out
    ```
+
+3. The third way uses forward declaration in a c++ file with CMake.
+
+   Just copy the `CMakeLists.txt` inside the `src` folder to your ridge location and include ridge similar as shown in this repository in your `CMakeLists.txt` files.
